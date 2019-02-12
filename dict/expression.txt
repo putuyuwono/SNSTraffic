@@ -1,0 +1,8 @@
+%Satisfaction
+lovely, happy, okay, great
+%Dissatisfaction
+bad, worse, jammed, jam, stuck, much, many, stop, stopped, block, hour
+%Anger
+crazy, insane, misery, hate, ridiculous, unbelievable, unreal, dying, hell, bitch, horrendous, sick, suck, sucks, killing, terrible, tired, annoyed, fuck, scary, infuriating, damn, shittier
+%Configuration
+base=5

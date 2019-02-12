@@ -1,0 +1,43 @@
+The aggregate detector data plots are the cornerstone of PeMS. These plots allow the user to examine the detector data at many different levels of spatial and temporal aggregation as well as averages over the time of day and days of the week.
+There are a number of different quantities which we let users view. The quantities available to the users are a function of the geographic level. At the lowest level, the individual station, users can see all of the quantities. When we aggregate spatially across a region, like for a district, some of the quantities no longer make sense, like flow, occupancy and speed. Hence when looking at a geographic region (instead of a single station) we don't allow users to make plots of these quantities. Below we list all of the quantities here and specify whether they can be plotted at each geographic level. For a detailed explanation of the calculations please look at the Calculations page in the Help system. The quantities are:
+
+Flow: This is the number of vehicles per time period of granularity. The granularity is user selectable and ranges from 5 minutes to 1 month. The flow values plotted are the sum over the unit of granularity. The flow is available only at the station level.
+Occupancy: The percentage of time that the detector is on. This is only available at the station level.
+Speed: The speed at the detector. This is only available at the station level.
+Truck Flow: The number of trucks per time period at this station. Depending on the configuration, this quantity can be an estimate of the truck flow or an actual measurement. Please check in the Calculation section of the Help system for more details.
+Truck Proportion: The percentage of flow that are trucks.
+Vehicle Miles Traveled: The total miles driven by the vehicles during that time period for that geographical segment. When plotting this over spatial regions this quantity is simply the sum of the VMT from the individual detectors. This is available at all levels.
+Vehicle Hours Traveled: The total amount of time spent by all of the vehicles on the freeway. When plotting this over spatial regions this quantity is simply the sum of the VHT from the individual detectors. This is available at all levels.
+Q: This is the sum of the VMT in a region divided by the sum of the VHT in the same region. For a single detector it's the speed. For a region over time it's a measure of the efficiency of the transportation system. This is available at all levels.
+Travel Time Index: This is the ratio of the average travel time for all users across a region to the free-flow travel time. The free-flow travel time is taken to be 60MPH. This is available at all levels.
+Delay: This is the amount of extra time spent by all the vehicles over and above the time it takes to traverse a link at a threshold speed. We compute the value of delay at many different threshold speeds, which are specified in the drop-down list. This is available at all levels.
+One important note to make about the delay is that the per-lane delay is *not* summed up to compute the aggregate delay for a VDS location. We have made the decision to use the aggregate speed (which is the flow-weighted speed across the lanes) and the aggregate flow as the inputs for the delay calculation for a VDS location at the 5-minute level. This delay is then used in all subsequent calculations in the system. Specifically, the hourly delay for a station is summed up from the 12 5-minute delay points. For this reason, we don't compute the hourly delay per lane nor do we show it on the timeseries plots. If we did then it might be confusing because the sum of the hourly delay in each lane (when the delay is calculated off of the hourly lane speed and flow values) wouldn't equal the hourly delay for the VDS.
+
+Lost Productivity: This is the number of lane-mile-hours that are lost due to the freeway operating under congested conditions. When the freeway is in congestion - which we take to be when the speed is below a certain, user-selectable, threshold - we find the ratio between the measured the flow and the capacity for this location. This drop in capacity is due to the fact that the freeway is operating in congested conditions instead of in freeflow. We then multiply one minus this ratio by the length of the segment to determine the number of equivalent lane-miles-hours of freeway which this represents. For a detailed explanation see the Calculations page of the Help section.
+In the title of each plot we show the following four lines of information:
+
+Title and units: This is the title of the plot. It usually contains the units being displayed as well.
+Data quality information: This shows the number of 5-minute lane data points which went into the plot. In addition, it shows the percentage of those points which are completely observed. A point is either observed or imputed.
+Geographic segment: This is the type of geographic segment (like County, or VDS) and the name of the segment, like Los Angeles, or 6000620.
+Time range: The time range for the data included in this plot.
+If you are plotting the Aggregate reports for a freeway then you have an additional control for each of the plot types:
+
+Postmile Range: This allows the users to set the postmile range of the freeway over which you'd like to have values summed up. This is useful for corridor analysis.
+Note that for the freeways, just like any other geographical segment containing more than a single detector, you can only plot values which make sense to sum across space. These include VMT, VHT, Q, TTI, Delay and Lost Productivity.
+Time Series
+
+The timeseries plots allow the user to show variables over time. In the plot you are free to display any combination of individual lanes or aggregate value on the same plot. Note that we only store and show the individual lane values at the hourly level.
+Users can select to show a second measured quantity against the right y-axis. A typical use of this is to plot flow against the left y-axis and then speed against the right y-axis. Note that we don't provide users with the ability to manually scale the right y-axis.
+
+Time of Day
+
+The time of day plots show the user the averages of the selected quantities over the time of day. Each plot in this section shows one of three sets of statistics. Each set has three individual statistics in it.
+Mean, minimum and maximum.
+Mean, mean + 1 standard deviation, mean - 1 standard deviation.
+Median, and two user specified percentiles. The default percentiles are the first and fourth quartiles.
+Discrete Days. This option doesn't show statistics, instead it shows all of the data points that go into the graph. It shows an hourly point for each day in the day range.
+In this plot, each time of day is the set of points at that particular time of day over the selected date range. This plot is usually used to look at things like typical weekday traffic patterns. You can easily restrict to the weekdays by not including the weekends or holidays.
+
+Day of Week
+
+The day of week plots let the user see the difference between the days of the week for the selected quantities. The same sets of statistics are available here that were available for the Time of Day plots. To get the points to use for this plot, the selected quantity is summed or averaged over the entire day. Speed and occupancy are averaged over the entire day (these are only available at the station level). These are both done via a straight average and not a flow-weighted average (you should use these values with caution because they don't quite make sense). Flow, VMT, VHT and delay are all summed for the entire day. Q and the travel time index are calculated from the respective values summed over the entire day.
